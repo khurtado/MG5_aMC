@@ -6453,6 +6453,9 @@ This implies that with decay chains:
         elif args[0] in ['cluster_local_path']:
             self.options[args[0]] = args[1].strip()
 
+        elif args[0] in ['cluster_queue']:
+            self.options[args[0]] = args[1].strip()
+        
         elif args[0] == 'cluster_status_update':
             if '(' in args[1]:
                 data = ' '.join([a for a in args[1:] if not a.startswith('-')])

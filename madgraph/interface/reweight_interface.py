@@ -782,7 +782,8 @@ class ReweightInterface(extended_cmd.Cmd):
                     os.remove(pjoin(Pdir, 'matrix%spy.so' % newtag))
                     newtag  = "L%s" % newtag
                     os.environ['MENUM'] = newtag
-                    misc.compile(['matrix%spy.so' % newtag], cwd=Pdir)
+                    if not self.rwgt_dir or not os.path.exists(pjoin(Pdir,'matrix%spy.so' % newtag )):
+                        misc.compile(['matrix%spy.so' % newtag], cwd=Pdir)
                     mymod = __import__('rw_me.SubProcesses.%s.matrix%spy' % (Pname, newtag), globals(), locals(), [],-1)
                 
                 S = mymod.SubProcesses
@@ -818,7 +819,8 @@ class ReweightInterface(extended_cmd.Cmd):
                 os.remove(pjoin(Pdir, 'matrix%spy.so' % metag ))
                 metag = "L%s" % metag
                 os.environ['MENUM'] = str(metag)
-                misc.compile(['matrix%spy.so' % metag], cwd=pjoin(subdir, Pdir))
+                if not self.rwgt_dir or not os.path.exists(pjoin(Pdir,'matrix%spy.so' % metag)):
+                    misc.compile(['matrix%spy.so' % metag], cwd=pjoin(subdir, Pdir))
                 mymod = __import__("rw_me_second.SubProcesses.%s.matrix%spy" % (Pname, metag))
             reload(mymod)
             S = mymod.SubProcesses
